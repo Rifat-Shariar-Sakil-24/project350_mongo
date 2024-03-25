@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 
 const url = 'mongodb+srv://'+process.env.CLUSTERUSERNAME+':'+process.env.CLUSTERUSERPASS+'@cluster0.qrtll88.mongodb.net/project350_mongo'
@@ -71,7 +71,10 @@ app.get("/menu",function(req,res){
 app.get("/student-entry/class/:number", function(req,res){
     const number = req.params.number;
     console.log(number);
-    res.render('menu');
+    let ClassNumber;
+    if(number==1) ClassNumber = "প্রথম শ্রেণি";
+    //else if(number==2) ClassNumber 
+    res.render('studentEntry', {ClassNumber:ClassNumber});
 })
 
 app.listen(process.env.PORT || 4000,function(){

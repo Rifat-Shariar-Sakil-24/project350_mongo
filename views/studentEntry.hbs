@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Information Entry</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet"
+        href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css" />
+    <link rel="stylesheet" href="/assets/css/form.css" />
+
+</head>
+
+<body>
+
+    <div class="container">
+        <form class="well form-horizontal" id="contact_form">
+            <fieldset>
+                <!-- Text input-first নাম -->
+                <h3>আপনি {{ ClassNumber }}র স্টুডেন্টের তথ্য এন্ট্রি করছেন</h3>
+                <br>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">শ্রেণি</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <label for="classNoInput"></label>
+                            <!-- Existing input field with readonly attribute -->
+                            <select id="classNoInput" name="classNo" class="form-control" required>
+                                <option value="1">প্রথম শ্রেণি</option>
+                            </select>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">প্রথম নাম</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input id="first_name" name="first_name" placeholder="প্রথম নাম" class="form-control"
+                                type="text" oninput="validateFirstName(this)" required />
+                        </div>
+                        <small id="firstNameError" class="text-danger"></small>
+                    </div>
+                </div>
+
+                <!-- Text input-last নাম
+ -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">শেষ নাম</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input name="last_name" placeholder="শেষ নাম" class="form-control" type="text"
+                                oninput="validateLastName()" required />
+                        </div>
+                        <small id="lastNameError" class="text-danger"></small>
+                    </div>
+                </div>
+
+                <!-- Text input-roll -->
+
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">রোল</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                            <input id="rollNoInput" name="roll" placeholder="ছাত্র/ছাত্রীর রোল নম্বর এন্ট্রি করুন"
+                                class="form-control" type="number" step="1" required />
+                        </div>
+                        <small id="rollNumberError" class="text-danger"></small>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">শিক্ষাবর্ষ</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                            <input id="yearNoInput" name="studyyear" placeholder="ছাত্র/ছাত্রীর শিক্ষাবর্ষ এন্ট্রি করুন"
+                                class="form-control" type="number" step="1" required />
+                        </div>
+                        <small id="studyYearError" class="text-danger"></small>
+
+                    </div>
+                </div>
+
+
+                <!-- Text input-father's নাম
+ -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">পিতার নাম</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input name="father_name" placeholder="পিতার পুরো নাম এন্ট্রি করুন:" class="form-control"
+                                type="text" required />
+                        </div>
+                        <small id="fatherNameError" class="text-danger"></small>
+                    </div>
+                </div>
+
+
+                <!-- Text input-father's নাম
+ -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">মায়ের নাম</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input name="mother_name" placeholder="মায়ের পুরো নাম এন্ট্রি করুন:" class="form-control"
+                                type="text" required />
+                        </div>
+                        <small id="motherNameError" class="text-danger"></small>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">ফোন নম্বর</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                            <input name="phone" placeholder="e.g. ০১৩১৩৯৫৪৫৯৫" class="form-control" type="text"
+                                required />
+                        </div>
+                        <small id="phoneError" class="text-danger"></small>
+                    </div>
+                </div>
+
+                <!-- Text input-address-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">ঠিকানা</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-হোমপেজ"></i></span>
+                            <input name="address" placeholder="ঠিকানা লিখুন" class="form-control" type="text"
+                                required />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text area-description -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">ছাত্র/ছাত্রীর বর্ণনা</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                            <textarea class="form-control" name="comment" placeholder="ছাত্র/ছাত্রীর বর্ণনা"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Student already exists?</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                            <span style="font-weight: bold; color: green" id="showbox" class="form-control">No Such
+                                Student Found</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4">
+                        <button type="submit" class="btn btn-warning">
+                            সাবমিট
+                            <span class="glyphicon glyphicon-send"></span>
+                        </button>
+                        <a href="/menu" class="back-btn">Back</a>
+                    </div>
+                </div>
+                <!-- Rest of your form content -->
+            </fieldset>
+        </form>
+
+    </div>
+
+    <script src="assets/js/studentEntry.js"></script>
+    <script src="assets/js/stuEntryVal.js"></script>
+</body>
+
+</html>
