@@ -1,0 +1,91 @@
+ /* my-form.css */
+
+/* Style for the form container */
+.my-form {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Style for the labels */
+.my-form label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Style for the input and select boxes */
+.my-form input, .my-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Style for the table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.table tr{
+  background-color:  #F5F5F4;
+}
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style for the totalsRow */
+#totalsRow th {
+  text-align: right;
+  font-weight: bold;
+}
+
+/* Style for the page navigation at the bottom */
+.flex a {
+  text-decoration: none;
+}
+
+.flex button {
+  cursor: pointer;
+}
+
+.flex button:hover {
+  background-color: #f1f1f1;
+}
+/* Add this to your existing styles */
+.my-form .form-group {
+  display: inline-block;
+  width: 48%; /* Adjust as needed */
+  margin-right: 2%; /* Adjust as needed, adds a small gap between form groups */
+}
+
+.my-form .form-group:last-child {
+  margin-right: 0;
+}
+/* Add this to your existing styles */
+.table th, .table td {
+  text-align: center;
+}
+
+/* Add this to your existing styles */
+#totalsRow th {
+  text-align: center;
+}
+
+/* Add this to your existing styles */
+.my-form label {
+  text-align: center;
+}
+
+/* Add this to your existing styles */
+.my-form input, .my-form select {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

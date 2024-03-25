@@ -1,0 +1,12 @@
+#success_message {
+  display: none;
+}
+
+.container {
+  position: relative;
+  top: 40px;
+  background-color: red;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+ }
