@@ -64,6 +64,16 @@ app.get("/login", function(req,res){
     res.render('login');
 })
 
+app.get("/menu",function(req,res){
+    res.render('menu');
+})
+
+app.get("/student-entry/class/:number", function(req,res){
+    const number = req.params.number;
+    console.log(number);
+    res.render('menu');
+})
+
 app.listen(process.env.PORT || 4000,function(){
     console.log("server is running on port 4000");
 })
