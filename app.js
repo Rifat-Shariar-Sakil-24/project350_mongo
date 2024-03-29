@@ -53,6 +53,19 @@ async function connectDB() {
 //   res.redirect('/');
 // })
 
+const studentSchema = new mongoose.Schema({
+    classNumber: Number,
+    firstName: String,
+    secondName: String,
+    rollNumber: Number,
+    yearNumber: Number,
+    fatherName: String,
+    motherName: String,
+    phoneNumber: String,
+    address: String,
+    description: String
+  });
+  const Student = mongoose.model('student', studentSchema);
 //home
 app.get("/",function(req,res){
     res.render('home');
@@ -64,17 +77,60 @@ app.get("/login", function(req,res){
     res.render('login');
 })
 
-app.get("/menu",function(req,res){
-    res.render('menu');
-})
+app.get("/menu", function (req, res) {
+  // res.render('menu');
+  const data = {
+    people: ["প্রথম", "দ্বিতীয়", "তৃতীয়", "চতুর্থ", "পঞ্চম"],
+  };
+  res.render("menu", data);
+});
 
-app.get("/student-entry/class/:number", function(req,res){
-    const number = req.params.number;
+app.get("/student-entry/class/:number", async function(req,res){
+    //await Student.deleteMany({});
+    let number = req.params.number;
+    number++;
     console.log(number);
     let ClassNumber;
-    if(number==1) ClassNumber = "প্রথম শ্রেণি";
-    //else if(number==2) ClassNumber 
+    if(number==1) ClassNumber = "প্রথম";
+    else if(number==2) ClassNumber="দ্বিতীয়"
+    else if(number==3) ClassNumber = "তৃতীয়"
+    else if (number==4) ClassNumber = "চতুর্থ"
+    else ClassNumber = "পঞ্চম"
     res.render('studentEntry', {ClassNumber:ClassNumber});
+})
+app.get('/getStudentData', async function(req,res){
+    const { classNo, roll, year } = req.query; // Use req.query to get query parameters
+    console.log("called");
+ 
+    try{
+        const found = await Student.findOne({ 
+            classNumber: classNo,
+            rollNumber: roll,
+            yearNumber: year,
+        }).exec();
+        if(found==null) res.status(401).send("student already exists");
+        else res.status(201).send("No such student found");
+    }
+    catch(error){
+        console.log(error);
+    }
+   // console.log(req.query);
+  });
+
+app.post("/student-entry/class/:number", function(req,res){
+  console.log(req.body);
+  const data = req.body; 
+  const student = new Student(data);
+  let number = req.params.number;
+  number++;
+  try{
+    student.save();
+    res.sendStatus(201).send(number);
+  }
+    catch(err){
+        res.sendStatus(401).send(err);
+    }
+  
 })
 
 app.listen(process.env.PORT || 4000,function(){

@@ -38,7 +38,8 @@ function updateStudentInfo() {
 
 
 
-}function submitForm(event) {
+}
+function submitForm(event) {
     event.preventDefault();  // Prevent the default form submission behavior
   
     const form = document.getElementById('contact_form');
