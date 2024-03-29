@@ -90,12 +90,12 @@ app.get("/student-entry/class/:number", async function(req,res){
     let number = req.params.number;
     number++;
     console.log(number);
-    let ClassNumber;
-    if(number==1) ClassNumber = "প্রথম";
-    else if(number==2) ClassNumber="দ্বিতীয়"
-    else if(number==3) ClassNumber = "তৃতীয়"
-    else if (number==4) ClassNumber = "চতুর্থ"
-    else ClassNumber = "পঞ্চম"
+    let ClassNumber = number;
+    // if(number==1) ClassNumber = "প্রথম";
+    // else if(number==2) ClassNumber="দ্বিতীয়"
+    // else if(number==3) ClassNumber = "তৃতীয়"
+    // else if (number==4) ClassNumber = "চতুর্থ"
+    // else ClassNumber = "পঞ্চম"
     res.render('studentEntry', {ClassNumber:ClassNumber});
 })
 app.get('/getStudentData', async function(req,res){

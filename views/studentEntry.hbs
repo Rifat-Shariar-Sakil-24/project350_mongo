@@ -10,7 +10,7 @@
     <link rel="stylesheet"
         href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css" />
     <link rel="stylesheet" href="/assets/css/form.css" />
-
+    <script></script>
 </head>
 
 <body>
@@ -19,7 +19,8 @@
         <form class="well form-horizontal" id="contact_form">
             <fieldset>
                 <!-- Text input-first নাম -->
-                <h3>আপনি {{ ClassNumber }} শ্রেণির স্টুডেন্টের তথ্য এন্ট্রি করছেন</h3>
+                <input type="hidden" id="classNumberNumerical" value="{{ClassNumber}}">
+                <h3 id="classNumberBangla"></h3>
                 <br>
                 <div class="form-group">
                     <label class="col-md-4 control-label">শ্রেণি</label>
@@ -29,7 +30,7 @@
                             <label for="classNoInput"></label>
                             <!-- Existing input field with readonly attribute -->
                             <select id="classNoInput" name="classNumber" class="form-control" required>
-                                <option value="1">প্রথম শ্রেণি</option>
+                                <option id="showClassNumber" value="{{ClassNumber}}"></option>
                             </select>
 
 
@@ -188,6 +189,7 @@
     {{!-- <script src="assets/js/studentEntry.js"></script>
     <script src="assets/js/stuEntryVal.js"></script> --}}
     <script src="/script/studentEntry.js"></script>
+    <script src="/script/classNumber.js"></script>
    
 </body>
 
