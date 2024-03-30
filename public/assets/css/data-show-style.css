@@ -89,3 +89,8 @@
   margin-right: auto;
   display: block;
 }
+
+
+.blueBorder{
+  border: 2px solid rgb(103, 103, 216);
+}

@@ -133,6 +133,15 @@ app.post("/student-entry/class/:number", function(req,res){
   
 })
 
+
+app.get('/studentInformation',function(req,res){
+  res.send("enter class");
+})
+app.get("/studentInformation/class/:number", function(req,res){
+  const number = req.params.number;
+  const Classes  = [1,2,3,4,5];
+  res.render('studentInformation', {Classes:Classes});
+})
 app.listen(process.env.PORT || 4000,function(){
     console.log("server is running on port 4000");
 })
