@@ -134,14 +134,42 @@ app.post("/student-entry/class/:number", function(req,res){
 })
 
 
-app.get('/studentInformation',function(req,res){
-  res.send("enter class");
-})
-app.get("/studentInformation/class/:number", function(req,res){
-  const number = req.params.number;
+
+app.get("/studentInformation", function(req,res){
   const Classes  = [1,2,3,4,5];
   res.render('studentInformation', {Classes:Classes});
 })
+
+app.get('/getAllStudentData', async function(req,res){
+  // console.log("ekhane asho");
+  // res.status(201).send("hurraaah");
+   const data = req.query; // Use req.query to get query parameters
+   //console.log(req.query);
+  // console.log("called");
+
+  try{
+    console.log(data)
+;      const studentInformation = await Student.find(data).exec();
+      // const found = await Student.findOne({ 
+      //     classNumber: classNo,
+      //     rollNumber: roll,
+      //     yearNumber: year,
+      // }).exec();
+      // if(found==null) res.status(401).send("student already exists");
+      // else res.status(201).send("No such student found");
+      console.log(studentInformation);
+      console.log(typeof(studentInformation));
+      res.status(201).json(studentInformation);
+  }
+  catch(error){
+      console.log(error);
+  }
+ // console.log(req.query);
+});
+
+
+
+
 app.listen(process.env.PORT || 4000,function(){
     console.log("server is running on port 4000");
 })
