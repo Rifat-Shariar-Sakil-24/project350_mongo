@@ -98,6 +98,40 @@ app.get("/student-entry/class/:number", async function(req,res){
     // else ClassNumber = "পঞ্চম"
     res.render('studentEntry', {ClassNumber:ClassNumber});
 })
+app.post("/student-entry/class/:number", function(req,res){
+    console.log(req.body);
+    const data = req.body; 
+    const student = new Student(data);
+    let number = req.params.number;
+    number++;
+    try{
+      student.save();
+      res.sendStatus(201).send(number);
+    }
+      catch(err){
+          res.sendStatus(401).send(err);
+      }
+    
+  })
+  app.put("/student-entry/class/:number", async function(req, res) {
+    const data = req.body;
+    const conditions = {
+        classNumber: data.classNumber,
+        rollNumber: data.rollNumber,
+        yearNumber: data.yearNumber,
+    };
+    console.log(data);
+
+    try {
+        const updatedStudent = await Student.findOneAndUpdate(conditions, data, { new: true });
+        res.status(201).send('Student edited successfully');
+    } catch (error) {
+        res.status(401).send(error);
+    }
+});
+ 
+
+
 app.get('/getStudentData', async function(req,res){
     const { classNo, roll, year } = req.query; // Use req.query to get query parameters
     console.log("called");
@@ -117,21 +151,6 @@ app.get('/getStudentData', async function(req,res){
    // console.log(req.query);
   });
 
-app.post("/student-entry/class/:number", function(req,res){
-  console.log(req.body);
-  const data = req.body; 
-  const student = new Student(data);
-  let number = req.params.number;
-  number++;
-  try{
-    student.save();
-    res.sendStatus(201).send(number);
-  }
-    catch(err){
-        res.sendStatus(401).send(err);
-    }
-  
-})
 
 
 

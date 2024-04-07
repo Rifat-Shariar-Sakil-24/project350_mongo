@@ -1,11 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // const  number = document.getElementById('classNumberNumerical').value;
-  // console.log('ClassNumber:', number);
-  // let ClassNumber;
-
-  // document.getElementById('showClassNumeberBangla').textContent = ClassNumber + " শ্রেণি";
-
-  // JavaScript to set values for each span with the class "showClassNumberBangla"
   var spanElements = document.getElementsByClassName("showClassNumberBangla");
   var hiddenInputs = document.getElementsByClassName("classNumberNumerical");
 
@@ -20,100 +13,216 @@ document.addEventListener("DOMContentLoaded", function () {
     ClassNumber += " শ্রেণি";
     spanElements[i].textContent = ClassNumber;
   }
-  
 });
 
 
+// changing selected classes color by adding classes dynamically
 let classes = document.getElementsByClassName("classBox");
-let classesToAdd = ['shadow-lg' ,'relative' ,'ring-2' , 'ring-blue-500', 'focus:outline-none', 'blueBorder'];
+let classesToAdd = [
+  "shadow-lg",
+  "relative",
+  "ring-2",
+  "ring-blue-500",
+  "focus:outline-none",
+  "blueBorder",
+];
 classes[0].classList.add(...classesToAdd);
 let classSelected = 1;
 
+for (let i = 0; i < classes.length; i++) {
+  classes[i].addEventListener("click", function () {
+    for (let j = 0; j < classes.length; j++) {
+      classes[j].classList.remove(...classesToAdd);
+    }
+    classes[i].classList.add(...classesToAdd);
+    classSelected = i + 1;
 
-for(let i=0;i<classes.length;i++){
-    classes[i].addEventListener('click',function(){
+    showStudentInfo();
+  });
+}
+
+
+
+// showing student information for corresponding class and year
+const yearInput = document.getElementById("yearNoInput");
+yearInput.addEventListener("input", showStudentInfo);
+
+let validForm = 1;
+let studentObject;
+let editStudentObjects = [];
+async function showStudentInfo() {
+  const yearNumber = yearInput.value;
+
+  if (yearNumber != null) {
+    try {
+      const classNumber = classSelected;
+      editStudentObjects = [];
+      const res = await fetch(
+        `/getAllStudentData?classNumber=${classNumber}&yearNumber=${yearNumber}`
+      );
+
+      const status = res.status;
+
+      if (status === 201) {
+        const data = await res.json();
+        const tableBody = document.getElementById("studentTableBody");
+        tableBody.innerHTML = "";
+
+        data.forEach((student) => {
+          editStudentObjects.push(student);
+          const row = document.createElement("tr");
+          console.log(student.firstName);
+          row.innerHTML = `
             
-            for(let j=0;j<classes.length;j++){
-                classes[j].classList.remove(...classesToAdd);
-            }
-            classes[i].classList.add(...classesToAdd);
-            classSelected = i+1;
+    <td>${student.firstName} ${student.secondName}</td>
+    <td>${student.fatherName}</td>
+    <td>${student.motherName}</td>
+    <td>${student.yearNumber}</td>
+    <td>${student.classNumber}</td>
+    <td>${student.rollNumber}</td>
+    <td>${student.phoneNumber}</td>
+    <td>${student.address}</td>
+    <td> <button value ="${student._id}" onclick="showEditBox(this.value)">Edit</button> 
+    <button onclick="showDeleteBox()">Delete</button> </td>
 
-            showStudentInfo();
-
-           //console.log(i);
-    })
+    `;
+          tableBody.appendChild(row);
+        });
+      } else {
+        alert("error occured");
+      }
+    } catch (error) {}
+  }
 }
 
 
 
 
 
+// editbox show. 
+async function showEditBox(objectId) {
+  /*catch student that should be edited*/
+  console.log(objectId);
+  const editStudentObject = editStudentObjects.filter(function (item) {
+    return item._id === objectId;
+  });
+  console.log(editStudentObject);
 
+  document.querySelector('[name="classNumber"]').value =
+    editStudentObject[0].classNumber;
+  document.querySelector('[name="firstName"]').value =
+    editStudentObject[0].firstName;
+  document.querySelector('[name="secondName"]').value =
+    editStudentObject[0].secondName;
+  document.querySelector('[name="rollNumber"]').value =
+    editStudentObject[0].rollNumber;
+  document.querySelector('[name="yearNumber"]').value =
+    editStudentObject[0].yearNumber;
+  document.querySelector('[name="fatherName"]').value =
+    editStudentObject[0].fatherName;
+  document.querySelector('[name="motherName"]').value =
+    editStudentObject[0].motherName;
+  document.querySelector('[name="phoneNumber"]').value =
+    editStudentObject[0].phoneNumber;
+  document.querySelector('[name="address"]').value =
+    editStudentObject[0].address;
+  document.querySelector('[name="description"]').value =
+    editStudentObject[0].description;
 
-
-
-const yearInput = document.getElementById('yearNoInput');
-
-
-
-yearInput.addEventListener('input', showStudentInfo);
-
-let validForm = 1;
-async function showStudentInfo() {
-    
-
-    const yearNumber = yearNoInput.value;
-    
-
-    if(yearNumber!=null){
-       
-      
-  try{
-     const classNumber = classSelected; 
-     console.log(classSelected);
-     const res  = await fetch(`/getAllStudentData?classNumber=${classNumber}&yearNumber=${yearNumber}`);
-
-     const status =  res.status;
-   
-     if(status===201){
-         const data = await res.json();
-         const tableBody = document.getElementById('studentTableBody');
-         tableBody.innerHTML = '';
-
-         data.forEach(student => {
-            const row = document.createElement('tr');
-            console.log(student.firstName);
-            row.innerHTML = `
-            
-    <td>${student.firstName} ${student.secondName}</td>
-    <td>${student.fatherName}</td>
-    <td>${student.motherName}</td>
-    <td>${student.yearNumber}</td>
-    <td>${student.classNumer}</td>
-    <td>${student.rollNumber}</td>
-    <td>${student.phoneNumber}</td>
-    <td>${student.address}</td>
-    `
-       tableBody.appendChild(row);
-         })
-         
-        
-         
-     }
-    //  else{
-    //    validForm = 1;
-    //   showbox.innerText = 'No such student found';
-    //   showbox.style.color = 'green';  
-    //   showbox.style.fontWeight = 'bold';  
-    //  }
-  }
-  catch(error){
-
-  }  
+  var modal = document.getElementById("editStudentModal");
+  modal.style.display = "block";
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
     }
+  };
 
+  console.log("edit box is clicked");
+}
+function showDeleteBox() {}
 
+function processDelete() {
+  const form = document.querySelector("form");
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
+    if (validForm === 1) {
+      const formData = new FormData(this);
+      const formDataObject = {};
 
+      formData.forEach((value, key) => {
+        formDataObject[key] = value;
+      });
+
+      const classNo = formDataObject["classNo"];
+
+      try {
+        const res = await fetch(`/student-entry/class/${classNo}`, {
+          method: "POST",
+          body: JSON.stringify(formDataObject),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (res.status == 201) {
+          console.log("Student added successfully");
+          this.reset();
+        } else {
+          const errorMessage = await res.text();
+          alert(errorMessage);
+        }
+      } catch (error) {
+        console.log("Error occurred:", error);
+      }
+    } else {
+      alert("Form submission cancelled because student already exists.");
+    }
+  });
+
+  // Function to submit the form programmatically
+  function submitForm() {
+    const form = document.querySelector("form");
+    const event = new Event("submit");
+    form.dispatchEvent(event);
+  }
+}
+
+const form = document.querySelector("form");
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+  const formDataObject = {};
+
+  formData.forEach((value, key) => {
+    formDataObject[key] = value;
+  });
+  //  console.log(formDataObject);
+  const classNo = formDataObject["classNo"];
+
+  try {
+    const res = await fetch(`/student-entry/class/${classNo}`, {
+      method: "PUT",
+      body: JSON.stringify(formDataObject),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (res.status == 201) {
+      alert(await res.text());
+      await showStudentInfo();
+    } else {
+      const errorMessage = await res.text();
+      alert(errorMessage);
+    }
+  } catch (error) {
+    console.log("Error occurred:", error);
+  }
+
+  //console.log('edit cliekd');
+});
+
+// Function to submit the form programmatically
+function submitForm() {
+  const form = document.querySelector("form");
+  const event = new Event("submit");
+  form.dispatchEvent(event);
 }
