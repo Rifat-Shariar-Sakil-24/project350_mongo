@@ -89,7 +89,7 @@ app.get("/student-entry/class/:number", async function(req,res){
     //await Student.deleteMany({});
     let number = req.params.number;
     number++;
-    console.log(number);
+    //console.log(number);
     let ClassNumber = number;
     // if(number==1) ClassNumber = "প্রথম";
     // else if(number==2) ClassNumber="দ্বিতীয়"
@@ -99,7 +99,7 @@ app.get("/student-entry/class/:number", async function(req,res){
     res.render('studentEntry', {ClassNumber:ClassNumber});
 })
 app.post("/student-entry/class/:number", function(req,res){
-    console.log(req.body);
+    //console.log(req.body);
     const data = req.body; 
     const student = new Student(data);
     let number = req.params.number;
@@ -120,7 +120,7 @@ app.post("/student-entry/class/:number", function(req,res){
         rollNumber: data.rollNumber,
         yearNumber: data.yearNumber,
     };
-    console.log(data);
+  //  console.log("edit" + data);
 
     try {
         const updatedStudent = await Student.findOneAndUpdate(conditions, data, { new: true });
@@ -129,6 +129,26 @@ app.post("/student-entry/class/:number", function(req,res){
         res.status(401).send(error);
     }
 });
+
+
+app.delete("/student-entry/class/:number", async function(req, res) {
+    const conditions = req.body;
+
+    
+    try {
+        await Student.findOneAndDelete(conditions);
+        res.status(201).send('student deleted successfully');
+    } catch (error) {
+        res.status(401).send(error);
+    }
+    // try {
+    //     const updatedStudent = await Student.findOneAndUpdate(conditions, data, { new: true });
+    //     res.status(201).send('Student edited successfully');
+    // } catch (error) {
+    //     res.status(401).send(error);
+    // }
+});
+ 
  
 
 
@@ -167,7 +187,7 @@ app.get('/getAllStudentData', async function(req,res){
   // console.log("called");
 
   try{
-    console.log(data)
+    //console.log(data)
 ;      const studentInformation = await Student.find(data).exec();
       // const found = await Student.findOne({ 
       //     classNumber: classNo,
@@ -176,8 +196,8 @@ app.get('/getAllStudentData', async function(req,res){
       // }).exec();
       // if(found==null) res.status(401).send("student already exists");
       // else res.status(201).send("No such student found");
-      console.log(studentInformation);
-      console.log(typeof(studentInformation));
+     // console.log(studentInformation);
+      //console.log(typeof(studentInformation));
       res.status(201).json(studentInformation);
   }
   catch(error){

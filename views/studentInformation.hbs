@@ -47,6 +47,55 @@
       text-decoration: none;
       cursor: pointer;
     }
+
+
+
+    
+  /* Modal styles */
+  .modal2 {
+    display: none; /* Hide modal by default */
+    position: fixed; /* Fixed position to overlay entire screen */
+    z-index: 1; /* Ensure modal is on top of other content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+  }
+  .modalEdit2 {
+    display: none; /* Hide modal by default */
+    position: fixed; /* Fixed position to overlay entire screen */
+    z-index: 1; /* Ensure modal is on top of other content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+  }
+
+  .modal-content2 {
+    background-color: #fefefe;
+    margin: auto; /* Center horizontally */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Adjust width as needed */
+    max-width: 400px; /* Maximum width for larger screens */
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center vertically and horizontally */
+  }
+
+  .modal-buttons2 {
+    margin-top: 20px;
+  }
+
+
+
+
   </style>
 </head>
 
@@ -213,6 +262,17 @@
       </form>
     </div>
   </div>
+
+
+   <div id="confirmationModalDelete" class="modal2">
+      <div class="modal-content2">
+        <p>Are you sure you want to delete this task?</p>
+        <div class="modal-buttons2">
+          <button id="confirmDeleteButton" class="btn btn-danger">Yes</button>
+          <button id="cancelDeleteButton" class="btn btn-secondary">No</button>
+        </div>
+      </div>
+    </div>
 
   <div class="bg-white  dark:text-gray-900 text-gray-700 h-screen flex overflow-hidden text-sm"
     style="background-color: rgb(255, 255, 255);">

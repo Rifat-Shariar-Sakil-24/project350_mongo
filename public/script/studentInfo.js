@@ -83,7 +83,7 @@ async function showStudentInfo() {
     <td>${student.phoneNumber}</td>
     <td>${student.address}</td>
     <td> <button value ="${student._id}" onclick="showEditBox(this.value)">Edit</button> 
-    <button onclick="showDeleteBox()">Delete</button> </td>
+    <button  onclick="showDeleteBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})">Delete</button> </td>
 
     `;
           tableBody.appendChild(row);
@@ -139,53 +139,10 @@ async function showEditBox(objectId) {
 
   console.log("edit box is clicked");
 }
-function showDeleteBox() {}
 
-function processDelete() {
-  const form = document.querySelector("form");
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
 
-    if (validForm === 1) {
-      const formData = new FormData(this);
-      const formDataObject = {};
 
-      formData.forEach((value, key) => {
-        formDataObject[key] = value;
-      });
-
-      const classNo = formDataObject["classNo"];
-
-      try {
-        const res = await fetch(`/student-entry/class/${classNo}`, {
-          method: "POST",
-          body: JSON.stringify(formDataObject),
-          headers: { "Content-Type": "application/json" },
-        });
-
-        if (res.status == 201) {
-          console.log("Student added successfully");
-          this.reset();
-        } else {
-          const errorMessage = await res.text();
-          alert(errorMessage);
-        }
-      } catch (error) {
-        console.log("Error occurred:", error);
-      }
-    } else {
-      alert("Form submission cancelled because student already exists.");
-    }
-  });
-
-  // Function to submit the form programmatically
-  function submitForm() {
-    const form = document.querySelector("form");
-    const event = new Event("submit");
-    form.dispatchEvent(event);
-  }
-}
-
+//edit form submission
 const form = document.querySelector("form");
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -208,7 +165,10 @@ form.addEventListener("submit", async function (e) {
 
     if (res.status == 201) {
       alert(await res.text());
+      var modal = document.getElementById("editStudentModal");
+      modal.style.display = "none";
       await showStudentInfo();
+
     } else {
       const errorMessage = await res.text();
       alert(errorMessage);
@@ -226,3 +186,52 @@ function submitForm() {
   const event = new Event("submit");
   form.dispatchEvent(event);
 }
+
+
+
+
+// show deletebox
+function showDeleteBox(yearNumber, classNumber, rollNumber) {
+  const studentDetails = {
+    yearNumber: yearNumber,
+    classNumber: classNumber,
+    rollNumber: rollNumber
+  };
+
+  const modal = document.getElementById('confirmationModalDelete');
+  modal.style.display = 'block';
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+  confirmDeleteButton.onclick = async function() {
+    try {
+      const res = await fetch(`/student-entry/class/${classNumber}`, {
+        method: "DELETE",
+        body: JSON.stringify(studentDetails),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (res.status == 201) {
+        alert(await res.text());
+        modal.style.display = "none";
+        showStudentInfo();
+      } else {
+        const errorMessage = await res.text();
+        alert(errorMessage);
+      }
+    } catch (error) {
+      console.log("Error occurred:", error);
+    }
+  };
+
+  const cancelDeleteButton = document.getElementById('cancelDeleteButton');
+  cancelDeleteButton.onclick = function() {
+    modal.style.display = "none";
+  };
+}
+
