@@ -8,7 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href="https://assets.codepen.io/344846/style.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/form.css" />
+  {{!-- <link rel="stylesheet" href="/form.css" /> --}}
   <link rel="stylesheet" href="/assets/css/data-show-style.css">
   <style>
     .modal {
@@ -123,10 +123,12 @@
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
               <label for="classNumber"></label>
               <!-- Existing input field with readonly attribute -->
-              <select id="classNumber" name="classNumber" class="form-control" required>
-              <option id="showClassNumber" value="{{ClassNumber}}"></option>
+              {{!-- <select id="classNumber" name="classNumber" class="form-control" required>
+              <option id="showClassNumber" value="{{ClassNumber}}" ></option>
                 <!-- Add more options as needed -->
-              </select>
+              </select> --}}
+              <input readonly id="classNumberNumber" name="classNumber"  class="form-control" type="number"
+                step="1" required />
             </div>
           </div>
         </div>
@@ -137,7 +139,7 @@
           <div class="col-md-4 inputGroupContainer">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-              <input id="rollNumber" name="rollNumber" placeholder="Enter student's integer roll" class="form-control" type="number"
+              <input readonly id="rollNumber" name="rollNumber" placeholder="Enter student's integer roll" class="form-control" type="number"
                 step="1" required />
             </div>
             <small id="rollNumberError" class="text-danger"></small>
@@ -150,7 +152,7 @@
           <div class="col-md-4 inputGroupContainer">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-              <input id="yearNumber" name="yearNumber" placeholder="Enter student's study year" class="form-control" type="number"
+              <input readonly id="yearNumber" name="yearNumber" placeholder="Enter student's study year" class="form-control" type="number"
                 step="1" required />
             </div>
             <small id="studyYearError" class="text-danger"></small>
@@ -163,7 +165,7 @@
           <div class="col-md-4 inputGroupContainer">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-              <span style="font-weight: bold; color:red" id="showbox" class="form-control">No such student found</span>
+              <span style="font-weight: bold; color:green" id="showbox" class="form-control"></span>
             </div>
           </div>
         </div>
@@ -172,7 +174,7 @@
         <div class="form-group">
           <label class="col-md-4 control-label">Has this student received Bangla Textbook?</label>
           <div class="col-md-4">
-            <input type="checkbox" id="bangla" name="bangla"  />
+            <input type="checkbox" id="bangla" name="bangla" />
             <label for="bangla">Yes</label>
           </div>
         </div>
@@ -181,7 +183,7 @@
         <div class="form-group">
           <label class="col-md-4 control-label">Has this student received English Textbook?</label>
           <div class="col-md-4">
-            <input type="checkbox" id="english" name="english"  />
+            <input type="checkbox" id="english" name="english"   />
             <label for="english">Yes</label>
           </div>
         </div>
@@ -245,7 +247,7 @@
 
    <div id="confirmationModalDelete" class="modal2">
       <div class="modal-content2">
-        <p>Are you sure you want to delete this task?</p>
+        <p>Are you sure you want to delete this record</p>
         <div class="modal-buttons2">
           <button id="confirmDeleteButton" class="btn btn-danger">Yes</button>
           <button id="cancelDeleteButton" class="btn btn-secondary">No</button>
@@ -396,7 +398,9 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
   <script src="/script/bookDistributionInfo.js"></script>
+    {{!-- <script src="/script/classNumber.js"></script> --}}
   <script src="/script/booknameshow.js"></script>
+
 </body>
 
 </html>

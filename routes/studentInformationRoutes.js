@@ -1,5 +1,6 @@
 const express = require('express');
 const { Student } = require('../models/Student');
+const { BookDistribution } = require('../models/BookDistribution');
 const app = express.Router();
 
 app.get("/student-entry/class/:number", async function(req,res){
@@ -45,14 +46,22 @@ app.post("/student-entry/class/:number", async function(req,res){
 
 app.delete("/student-entry/class/:number", async function(req, res) {
     const conditions = req.body;
+    console.log(conditions);
 
-    
     try {
-        await Student.findOneAndDelete(conditions);
-        res.status(201).send('student deleted successfully');
+        await BookDistribution.findOneAndDelete(conditions);
+        try {
+            await Student.findOneAndDelete(conditions);
+            res.status(201).send('student deleted successfully');
+        } catch (error) {
+            res.status(401).send(error);
+        }
     } catch (error) {
         res.status(401).send(error);
     }
+
+    
+   
 });
  
  

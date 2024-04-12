@@ -54,6 +54,59 @@ app.post("/book-distribution-entry/class/:number", async function (req, res) {
 });
 
 
+app.put("/book-distribution-entry/class/:number", async function (req, res) {
+   // console.log(req.body);
+
+    const studentInfo = await Student.findOne({ 
+        classNumber: req.body.classNumber,
+        rollNumber: req.body.rollNumber,
+        yearNumber: req.body.yearNumber,
+    }).exec();
+
+    //console.log(studentInfo._id);
+    
+    const studentID = studentInfo._id;
+
+
+  const transformedData = {
+    studentID : studentID,
+    classNumber: parseInt(req.body.classNumber),
+    rollNumber: parseInt(req.body.rollNumber),
+    yearNumber: parseInt(req.body.yearNumber),
+    subjects: {
+      bangla: req.body.bangla,
+      english: req.body.english,
+      math: req.body.math,
+      science: req.body.science,
+      socialscience: req.body.socialscience,
+      religion: req.body.religion,
+    },
+  };
+
+//   console.log(transformedData);
+ 
+try {
+    const updatedDistribution = await BookDistribution.findOneAndUpdate({studentID: studentID}, transformedData, { new: true });
+    res.status(201).send('Student edited successfully');
+} catch (error) {
+    console.log(error);
+    res.status(401).send(error);
+}
+});
+
+app.delete("/book-distribution-entry/class/:number", async function (req, res) {
+  const conditions = req.body;
+
+  try {
+    await BookDistribution.findOneAndDelete(conditions);
+    res.status(201).send("record deleted successfully");
+  } catch (error) {
+    res.status(401).send(error);
+  }
+});
+ 
+ 
+
 app.get("/bookDistributionInformation", function(req,res){
     const Classes  = [1,2,3,4,5];
     res.render('bookDistributionInformation', {Classes:Classes});
@@ -93,5 +146,9 @@ app.get("/bookDistributionInformation", function(req,res){
    }
   
  });
+
+
+
+ 
 
  module.exports = app;
