@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://assets.codepen.io/344846/style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/form.css" />
+  <link rel="stylesheet" href="/assets/css/data-show-style.css">
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 1% auto;
+      /* Adjust the top margin to your preference */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 40%;
+    }
+
+    /* Close button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+
+
+    
+  /* Modal styles */
+  .modal2 {
+    display: none; /* Hide modal by default */
+    position: fixed; /* Fixed position to overlay entire screen */
+    z-index: 1; /* Ensure modal is on top of other content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+  }
+  .modalEdit2 {
+    display: none; /* Hide modal by default */
+    position: fixed; /* Fixed position to overlay entire screen */
+    z-index: 1; /* Ensure modal is on top of other content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+  }
+
+  .modal-content2 {
+    background-color: #fefefe;
+    margin: auto; /* Center horizontally */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Adjust width as needed */
+    max-width: 400px; /* Maximum width for larger screens */
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center vertically and horizontally */
+  }
+
+  .modal-buttons2 {
+    margin-top: 20px;
+  }
+
+
+
+
+  </style>
+</head>
+
+<body>
+
+
+
+
+  <div id="editStudentModal" class="modal">
+    <div class="modal-content">
+      <!-- Your form content here -->
+    
+       <form class="well form-horizontal" id="contact_form">
+      <fieldset>
+        <!-- Text input-first name -->
+
+        <!-- Text input-first name -->
+        <input type="hidden" id="classNumberNumerical" value="{{ClassNumber}}">
+                <h3 id="classNumberBangla"></h3>
+                <br>
+        <div class="form-group">
+          <label class="col-md-4 control-label">শ্রেণি</label>
+          <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <label for="classNumber"></label>
+              <!-- Existing input field with readonly attribute -->
+              <select id="classNumber" name="classNumber" class="form-control" required>
+              <option id="showClassNumber" value="{{ClassNumber}}"></option>
+                <!-- Add more options as needed -->
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text input-roll -->
+        <div class="form-group">
+          <label class="col-md-4 control-label">রোল</label>
+          <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+              <input id="rollNumber" name="rollNumber" placeholder="Enter student's integer roll" class="form-control" type="number"
+                step="1" required />
+            </div>
+            <small id="rollNumberError" class="text-danger"></small>
+          </div>
+        </div>
+
+        <!-- Number input for year -->
+        <div class="form-group">
+          <label class="col-md-4 control-label">শিক্ষাবর্ষ</label>
+          <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+              <input id="yearNumber" name="yearNumber" placeholder="Enter student's study year" class="form-control" type="number"
+                step="1" required />
+            </div>
+            <small id="studyYearError" class="text-danger"></small>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-md-4 control-label">Student Name</label>
+          <div class="col-md-4 inputGroupContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+              <span style="font-weight: bold; color:red" id="showbox" class="form-control">No such student found</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-md-4 control-label">Has this student received Bangla Textbook?</label>
+          <div class="col-md-4">
+            <input type="checkbox" id="bangla" name="bangla"  />
+            <label for="bangla">Yes</label>
+          </div>
+        </div>
+
+        <!-- Checkbox checks -->
+        <div class="form-group">
+          <label class="col-md-4 control-label">Has this student received English Textbook?</label>
+          <div class="col-md-4">
+            <input type="checkbox" id="english" name="english"  />
+            <label for="english">Yes</label>
+          </div>
+        </div>
+
+        <!-- Checkbox checks -->
+        <div class="form-group">
+          <label class="col-md-4 control-label">Has this student received Math Textbook?</label>
+          <div class="col-md-4">
+            <input type="checkbox" id="math" name="math"  />
+            <label for="math">Yes</label>
+          </div>
+        </div>
+
+        <div id="science" class="form-group" >
+          <label class="col-md-4 control-label">Has this student received Science Textbook?</label>
+          <div class="col-md-4">
+            <input type="checkbox" id="science" name="science"  />
+            <label for="science">Yes</label>
+          </div>
+        </div>
+
+         <div id="socialscience" class="form-group">
+          <label class="col-md-4 control-label">Has this student received Social Science Textbook?</label>
+          <div class="col-md-4">
+            <input type="checkbox" id="socialscience" name="socialscience"  />
+            <label for="socialscience">Yes</label>
+          </div>
+        </div>
+
+         <div id="religion" class="form-group">
+          <label class="col-md-4 control-label">Has this student received Religion Textbook?</label>
+          <div class="col-md-4">
+            <input type="checkbox" id="religion" name="religion"  />
+            <label for="religion">Yes</label>
+          </div>
+        </div>
+
+
+
+
+
+        <!-- Text area-description -->
+
+
+
+        <!-- Your existing Submit Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label"></label>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-warning">
+              Submit <span class="glyphicon glyphicon-send"></span>
+            </button>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+    </div>
+  </div>
+
+
+   <div id="confirmationModalDelete" class="modal2">
+      <div class="modal-content2">
+        <p>Are you sure you want to delete this task?</p>
+        <div class="modal-buttons2">
+          <button id="confirmDeleteButton" class="btn btn-danger">Yes</button>
+          <button id="cancelDeleteButton" class="btn btn-secondary">No</button>
+        </div>
+      </div>
+    </div>
+
+  <div class="bg-white  dark:text-gray-900 text-gray-700 h-screen flex overflow-hidden text-sm"
+    style="background-color: rgb(255, 255, 255);">
+
+
+
+    <!-- main-center section -->
+    <div class="flex-grow overflow-hidden h-full flex flex-col">
+
+      <!-- top-nav-links -->
+      <div class="h-16 lg:flex w-full border-b hidden px-10">
+        <div class="flex h-full text-gray-600 dark:text-gray-900">
+          <a href="/"
+            class="cursor-pointer h-full border-b-2 border-blue-500 text-blue-500 dark:text-gray-900 dark:border-white inline-flex mr-8 items-center"
+            style="color: black; font-weight: 600;border-bottom: 2px solid gray;">হোমপেজ</a>
+          <a href="/menu"
+            class="cursor-pointer h-full border-b-2 border-blue-500 text-blue-500 dark:text-gray-900 dark:border-white inline-flex mr-8 items-center"
+            style="color: black; font-weight: 600; border-bottom: 2px solid gray;">এন্ট্রি মেনু</a>
+          
+          <a href="/bookDistributionInformation"
+            class="cursor-pointer h-full border-b-2 dark:text-gray-900 dark:border-white inline-flex mr-8 items-center"
+            style="color: black; font-weight: 600;border-bottom: 2px solid rgb(30, 105, 180);">বই বিতরণী তথ্য</a>
+          
+          <a href="/studentInformation"
+            class="cursor-pointer h-full border-b-2 dark:text-gray-900 dark:border-white inline-flex mr-8 items-center "
+            style="padding: 3px; color: black; font-weight: 600; border-bottom: 2px solid gray;">শিক্ষার্থীদের তথ্য</a>
+          <a href="/http://127.0.0.1:5500/std-page1.html"
+            class="cursor-pointer h-full border-b-2 dark:text-gray-900 dark:border-white inline-flex mr-8 items-center"
+            style="padding: 3px; color: black; font-weight: 600; border-bottom: 2px solid gray;">প্রাপ্ত বইয়ের তথ্য</a>
+
+        </div>
+
+        <div class="ml-auto flex items-center space-x-7">
+
+          <a href="http://127.0.0.1:5500/profile.html">
+
+            <button class="flex items-center">
+              <span class="relative flex-shrink-0">
+                <img class="w-7 h-7 rounded-full" src="http://localhost:4000/assets/images/profile_pic.jpg"
+                  alt="profile" />
+                <span
+                  class="absolute right-0 -mb-0.5 bottom-0 w-2 h-2 rounded-full bg-green-500 border border-white dark:border-gray-900"></span>
+              </span>
+              <span class="ml-2">এডমিন</span>
+              <svg viewBox="0 0 24 24" class="w-4 ml-1 flex-shrink-0" stroke="currentColor" stroke-width="2" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <div class="flex-grow flex overflow-x-hidden">
+
+        <!-- 2nd-sidebar-class list -->
+        <div class="xl:w-72 w-48 flex-shrink-0 border-r border-gray-20 h-full overflow-y-auto lg:block hidden p-5">
+
+          <div class="space-y-4 mt-3">
+            {{#each Classes}}
+            <input type="hidden" class="classNumberNumerical" value="{{this}}">
+
+
+            <div {{!--
+              class="classBox bg-white p-3 w-full flex flex-col rounded-md  shadow-lg relative ring-2 ring-blue-500 focus:outline-none"
+              style="border: 2px solid rgb(103, 103, 216);"> --}}
+              class="classBox bg-white p-3 w-full flex flex-col rounded-md shadow">
+              <button class="bg-white p-3 w-full flex flex-col rounded-md  shadow">
+                <div
+                  class="flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-gray-900 pb-2 mb-2 xl:border-b border-opacity-75 dark:border-gray-700 w-full">
+                  <img src="http://localhost:4000/assets/images/{{this}}.png" class="w-7 h-7 mr-2 rounded-full"
+                    alt="profile" />
+                  <span class="showClassNumberBangla"> </span> <!-- Changed ID to Class for multiple instances -->
+                </div>
+                <div class="flex items-center w-full">
+                  <div class="text-xs py-1 px-2 leading-none  bg-blue-100 text-blue-500 rounded-md">
+                    প্রাথমিক
+                  </div>
+                </div>
+              </button>
+            </div>
+            {{/each}}
+
+
+
+
+
+
+          </div>
+        </div>
+
+
+
+
+
+        <div class="flex-grow bg-white  overflow-y-auto">
+
+
+          <div class="sm:p-7 p-4">
+
+            <form class="my-form">
+              <label for="yearInput">Enter Year:</label>
+              <input type="text" id="yearNoInput" name="selectedYear">
+            </form>
+
+            <table class="table">
+              <thead id="studentTableHead">
+                {{!-- <tr>
+                  <th scope="col">নাম</th>
+                  <th scope="col">বাবার নাম</th>
+                  <th scope="col">মায়ের নাম</th>
+                  <th scope="col">শিক্ষাবর্ষ</th>
+                  <th scope="col">শ্রেণি</th>
+                  <th scope="col">রোল</th>
+                  <th scope="col">ফোন</th>
+                  <th scope="col">ঠিকানা</th>
+                  <th scope="col">অ্যাকশন</th>
+
+                </tr> --}}
+                
+              </thead>
+              <tbody id="studentTableBody">
+                <!-- Table body will be dynamically updated by JavaScript -->
+              </tbody>
+            </table>
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+              crossorigin="anonymous"></script>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="/script/bookDistributionInfo.js"></script>
+  <script src="/script/booknameshow.js"></script>
+</body>
+
+</html>

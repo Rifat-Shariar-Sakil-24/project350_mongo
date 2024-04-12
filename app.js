@@ -11,6 +11,10 @@ const path = require('path');
 // const taskRoutes = require('./routes/taskRoutes');
 // const { isAuthenticated } = require('./middleware/authMiddleware');
 
+const studentInformationRoutes = require('./routes/studentInformationRoutes.js');
+const bookDistributionRoutes = require('./routes/bookDistributionRoutes.js');
+
+
 const app = express();
 app.use(express.static("public"));
 //app.set('view engine', 'ejs');
@@ -53,20 +57,12 @@ async function connectDB() {
 //   res.redirect('/');
 // })
 
-const studentSchema = new mongoose.Schema({
-    classNumber: Number,
-    firstName: String,
-    secondName: String,
-    rollNumber: Number,
-    yearNumber: Number,
-    fatherName: String,
-    motherName: String,
-    phoneNumber: String,
-    address: String,
-    description: String
-  });
-  const Student = mongoose.model('student', studentSchema);
+
 //home
+
+
+
+
 app.get("/",function(req,res){
     res.render('home');
 })
@@ -85,130 +81,12 @@ app.get("/menu", function (req, res) {
   res.render("menu", data);
 });
 
-app.get("/student-entry/class/:number", async function(req,res){
-    //await Student.deleteMany({});
-    let number = req.params.number;
-    number++;
-    //console.log(number);
-    let ClassNumber = number;
-    // if(number==1) ClassNumber = "প্রথম";
-    // else if(number==2) ClassNumber="দ্বিতীয়"
-    // else if(number==3) ClassNumber = "তৃতীয়"
-    // else if (number==4) ClassNumber = "চতুর্থ"
-    // else ClassNumber = "পঞ্চম"
-    res.render('studentEntry', {ClassNumber:ClassNumber});
-})
-app.post("/student-entry/class/:number", function(req,res){
-    //console.log(req.body);
-    const data = req.body; 
-    const student = new Student(data);
-    let number = req.params.number;
-    number++;
-    try{
-      student.save();
-      res.sendStatus(201).send(number);
-    }
-      catch(err){
-          res.sendStatus(401).send(err);
-      }
-    
-  })
-  app.put("/student-entry/class/:number", async function(req, res) {
-    const data = req.body;
-    const conditions = {
-        classNumber: data.classNumber,
-        rollNumber: data.rollNumber,
-        yearNumber: data.yearNumber,
-    };
-  //  console.log("edit" + data);
 
-    try {
-        const updatedStudent = await Student.findOneAndUpdate(conditions, data, { new: true });
-        res.status(201).send('Student edited successfully');
-    } catch (error) {
-        res.status(401).send(error);
-    }
-});
+app.use(studentInformationRoutes);
+app.use(bookDistributionRoutes);
 
 
-app.delete("/student-entry/class/:number", async function(req, res) {
-    const conditions = req.body;
-
-    
-    try {
-        await Student.findOneAndDelete(conditions);
-        res.status(201).send('student deleted successfully');
-    } catch (error) {
-        res.status(401).send(error);
-    }
-    // try {
-    //     const updatedStudent = await Student.findOneAndUpdate(conditions, data, { new: true });
-    //     res.status(201).send('Student edited successfully');
-    // } catch (error) {
-    //     res.status(401).send(error);
-    // }
-});
- 
- 
-
-
-app.get('/getStudentData', async function(req,res){
-    const { classNo, roll, year } = req.query; // Use req.query to get query parameters
-    console.log("called");
- 
-    try{
-        const found = await Student.findOne({ 
-            classNumber: classNo,
-            rollNumber: roll,
-            yearNumber: year,
-        }).exec();
-        if(found==null) res.status(401).send("student already exists");
-        else res.status(201).send("No such student found");
-    }
-    catch(error){
-        console.log(error);
-    }
-   // console.log(req.query);
-  });
-
-
-
-
-app.get("/studentInformation", function(req,res){
-  const Classes  = [1,2,3,4,5];
-  res.render('studentInformation', {Classes:Classes});
-})
-
-app.get('/getAllStudentData', async function(req,res){
-  // console.log("ekhane asho");
-  // res.status(201).send("hurraaah");
-   const data = req.query; // Use req.query to get query parameters
-   //console.log(req.query);
-  // console.log("called");
-
-  try{
-    //console.log(data)
-;      const studentInformation = await Student.find(data).exec();
-      // const found = await Student.findOne({ 
-      //     classNumber: classNo,
-      //     rollNumber: roll,
-      //     yearNumber: year,
-      // }).exec();
-      // if(found==null) res.status(401).send("student already exists");
-      // else res.status(201).send("No such student found");
-     // console.log(studentInformation);
-      //console.log(typeof(studentInformation));
-      res.status(201).json(studentInformation);
-  }
-  catch(error){
-      console.log(error);
-  }
- // console.log(req.query);
-});
-
-
-
-
+  
 app.listen(process.env.PORT || 4000,function(){
     console.log("server is running on port 4000");
 })
