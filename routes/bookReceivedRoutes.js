@@ -10,9 +10,15 @@ app.get('/book-Received-entry/class/:number', function(req,res){
 })
 
 app.post('/book-Received-entry/class/:number', async function(req,res){
-   const data = req.body;
+    try {
+           const data = req.body;
    const newBookReceived = new BookReceived(data);
    await newBookReceived.save();
+   res.status(201).send('new book received data has been added');
+    } catch (error) {
+        res.status(401).send('error occurred while saving data');
+    }
+
 })
 
 

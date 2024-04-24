@@ -21,14 +21,14 @@ form.addEventListener('submit', async function(e) {
                 headers: { 'Content-Type': 'application/json'}
             });
             
-            // if (res.status == 201) {
-            //     this.reset();
-            //     alert('Book distribution Information added successfully');
+            if (res.status == 201) {
+                this.reset();
+                alert('Book received Information added successfully');
                  
-            // } else {
-            //     const errorMessage = await res.text(); 
-            //     alert(errorMessage);
-            // }
+            } else {
+                const errorMessage = await res.text(); 
+                alert(errorMessage);
+            }
         } catch(error) {
             console.log("Error occurred:", error);
         }
