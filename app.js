@@ -13,6 +13,7 @@ const path = require('path');
 
 const studentInformationRoutes = require('./routes/studentInformationRoutes.js');
 const bookDistributionRoutes = require('./routes/bookDistributionRoutes.js');
+const bookReceivedRoutes = require('./routes/bookReceivedRoutes.js');
 
 
 const app = express();
@@ -84,6 +85,8 @@ app.get("/menu", function (req, res) {
 
 app.use(studentInformationRoutes);
 app.use(bookDistributionRoutes);
+app.use(bookReceivedRoutes);
+
 
 
   

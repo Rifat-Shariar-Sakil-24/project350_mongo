@@ -42,7 +42,7 @@
             <ul class="main-menu">
               <li><a href="/studentInformation">শিক্ষার্থীদের তথ্য</a></li>
               <li><a href="/bookDistributionInformation">বই বিতরণী তথ্য</a></li>
-              <li><a href="/http://127.0.0.1:5500/std-page1.html">প্রাপ্ত বইয়ের তথ্য</a></li>
+              <li><a href="/bookReceivedInformation">প্রাপ্ত বইয়ের তথ্য</a></li>
                <li><a href="/">লগ আউট</a></li>
             
             </ul>
@@ -105,64 +105,23 @@
         
         </div>
         <div class="project-tasks">
-            <div class="project-column std-info">
-
-                <a href="/bookfrom-ntcb-entry-class1">
-                  <div class="task" >
-                    <div class="task__tags">
-                      <span class="task__tag task__tag--copyright">প্রাথমিক শ্রেণি</span>
-                       
-                    </div>
-                    <p>এখানে ক্লিক করুন প্রথম শ্রেণির তথ্য এন্ট্রির
- জন্যে</p>
-                 
-                  </div>
-              </a>
-                <a href="/bookfrom-ntcb-entry-class2">
-                    <div class="task" >
-                      <div class="task__tags">
-                        <span class="task__tag task__tag--copyright">প্রাথমিক শ্রেণি</span>
-                         
-                      </div>
-                      <p>এখানে ক্লিক করুন দ্বিতীয় শ্রেণির তথ্য এন্ট্রির
- জন্যে</p>
-                   
-                    </div>
-                </a>
-                <a href="/bookfrom-ntcb-entry-class3">
-                    <div class="task" >
-                      <div class="task__tags">
-                        <span class="task__tag task__tag--copyright">প্রাথমিক শ্রেণি</span>
-                         
-                      </div>
-                      <p>এখানে ক্লিক করুন তৃতীয় শ্রেণির তথ্য এন্ট্রির
- জন্যে</p>
-                   
-                    </div>
-                </a>
-                <a href="/bookfrom-ntcb-entry-class4">
-                    <div class="task" >
-                      <div class="task__tags">
-                        <span class="task__tag task__tag--copyright">প্রাথমিক শ্রেণি</span>
-                      </div>
-                      <p>এখানে ক্লিক করুন চতুর্থ শ্রেণির তথ্য এন্ট্রির
- জন্যে</p>
-                    </div>
-                </a>
-                <a href="/bookfrom-ntcb-entry-class5">
-                    <div class="task" >
-                      <div class="task__tags">
-                        <span class="task__tag task__tag--copyright">প্রাথমিক শ্রেণি</span>
-                         
-                      </div>
-                      <p>এখানে ক্লিক করুন পঞ্চম শ্রেণির তথ্য এন্ট্রির
- জন্যে</p>
-                   
-                    </div>
-                </a>
-
-            </div>
-        </div>
+          <div class="project-column std-info">
+        
+            {{#each people}}
+        
+            <a href="/book-received-entry/class/{{@index}}">
+              <div class="task">
+                <div class="task__tags">
+                  <span class="task__tag task__tag--copyright">প্রাথমিক শ্রেণি</span>
+                </div>
+                <p>এখানে ক্লিক করুন {{this}} শ্রেণির ছাত্র/ছাত্রীর তথ্য এন্ট্রি করার জন্যে</p>
+              </div>
+            </a>
+        
+            {{/each}}
+        
+          </div>
+        
 
       </main>
       

@@ -43,18 +43,6 @@
           </div>
         </div>
 
-        <!-- Text input-roll -->
-        <div class="form-group">
-          <label class="col-md-4 control-label">রোল</label>
-          <div class="col-md-4 inputGroupContainer">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-              <input id="rollNumber" name="rollNumber" placeholder="Enter student's integer roll" class="form-control" type="number"
-                step="1" required />
-            </div>
-            <small id="rollNumberError" class="text-danger"></small>
-          </div>
-        </div>
 
         <!-- Number input for year -->
         <div class="form-group">
@@ -62,7 +50,7 @@
           <div class="col-md-4 inputGroupContainer">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-              <input id="yearNumber" name="yearNumber" placeholder="Enter student's study year" class="form-control" type="number"
+              <input id="yearNumber" name="yearNumber" placeholder="Enter student's study year" class="form-control" type="text"
                 step="1" required />
             </div>
             <small id="studyYearError" class="text-danger"></small>
@@ -70,66 +58,56 @@
         </div>
 
 
-        <div class="form-group">
-          <label class="col-md-4 control-label">Student Name</label>
-          <div class="col-md-4 inputGroupContainer">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-              <span style="font-weight: bold; color:red" id="showbox" class="form-control">No such student found</span>
-            </div>
-          </div>
-        </div>
+              <div class="form-group">
+                    <label class="col-md-4 control-label">তারিখ</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            <input name="date" placeholder="তারিখ" class="form-control" type="date"  required/>
+                        </div>
+                        <small id="dateError" class="text-danger"></small>
+
+                    </div>
+                </div>
+
+            
+
+                <!-- Text input-class -->
+
+                <!-- Text input-subject's নাম
+ -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">বিষয়</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
+                            <!-- Replace the text input with a select element -->
+                            <select name="subject" class="form-control">
+                                <option value="bangla" id="english" >আমার বাংলা বই</option>
+                                <option value="english" >English for Today</option>
+                                <option value="math">প্রাথমিক গণিত</option>
+                                 <option value="science" id="science" >Science</option>
+                                <option value="socialscience" id="socialscience" hidden>Social Science</option>
+                                <option value="religion" id="religion" hidden>Religion</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input-book number -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">বইয়ের সংখ্যা </label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
+                            <input name="bookNumber" placeholder="বইয়ের সংখ্যা" class="form-control" type="text" required />
+                        </div>
+                         <div id="bookNumberError" style="color: red;"></div>
+                    </div>
+                </div>
 
 
-        <div class="form-group">
-          <label class="col-md-4 control-label">Has this student received Bangla Textbook?</label>
-          <div class="col-md-4">
-            <input type="checkbox" id="bangla" name="bangla"  />
-            <label for="bangla">Yes</label>
-          </div>
-        </div>
 
-        <!-- Checkbox checks -->
-        <div class="form-group">
-          <label class="col-md-4 control-label">Has this student received English Textbook?</label>
-          <div class="col-md-4">
-            <input type="checkbox" id="english" name="english"  />
-            <label for="english">Yes</label>
-          </div>
-        </div>
-
-        <!-- Checkbox checks -->
-        <div class="form-group">
-          <label class="col-md-4 control-label">Has this student received Math Textbook?</label>
-          <div class="col-md-4">
-            <input type="checkbox" id="math" name="math"  />
-            <label for="math">Yes</label>
-          </div>
-        </div>
-
-        <div id="science" class="form-group" >
-          <label class="col-md-4 control-label">Has this student received Science Textbook?</label>
-          <div class="col-md-4">
-            <input type="checkbox" id="science" name="science"  />
-            <label for="science">Yes</label>
-          </div>
-        </div>
-
-         <div id="socialscience" class="form-group">
-          <label class="col-md-4 control-label">Has this student received Social Science Textbook?</label>
-          <div class="col-md-4">
-            <input type="checkbox" id="socialscience" name="socialscience"  />
-            <label for="socialscience">Yes</label>
-          </div>
-        </div>
-
-         <div id="religion" class="form-group">
-          <label class="col-md-4 control-label">Has this student received Religion Textbook?</label>
-          <div class="col-md-4">
-            <input type="checkbox" id="religion" name="religion"  />
-            <label for="religion">Yes</label>
-          </div>
-        </div>
 
 
 
@@ -164,7 +142,7 @@
     </a>
       <script src="/script/classNumber.js"></script>
       <script src="/script/booknameshow.js"></script>
-      <script src="/script/distributionEntry.js"></script>
+      <script src="/script/bookReceivedEntry.js"></script>
   </div>
 </body>
 
