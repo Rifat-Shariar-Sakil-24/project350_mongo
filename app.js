@@ -14,6 +14,7 @@ const path = require('path');
 const studentInformationRoutes = require('./routes/studentInformationRoutes.js');
 const bookDistributionRoutes = require('./routes/bookDistributionRoutes.js');
 const bookReceivedRoutes = require('./routes/bookReceivedRoutes.js');
+const authRoutes = require('./routes/authRoutes.js');
 
 
 const app = express();
@@ -64,16 +65,6 @@ async function connectDB() {
 
 
 
-app.get("/",function(req,res){
-    res.render('home');
-})
-
-
-//login
-app.get("/login", function(req,res){
-    res.render('login');
-})
-
 app.get("/menu", function (req, res) {
   // res.render('menu');
   const data = {
@@ -82,7 +73,7 @@ app.get("/menu", function (req, res) {
   res.render("menu", data);
 });
 
-
+app.use(authRoutes);
 app.use(studentInformationRoutes);
 app.use(bookDistributionRoutes);
 app.use(bookReceivedRoutes);
