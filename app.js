@@ -15,6 +15,7 @@ const studentInformationRoutes = require('./routes/studentInformationRoutes.js')
 const bookDistributionRoutes = require('./routes/bookDistributionRoutes.js');
 const bookReceivedRoutes = require('./routes/bookReceivedRoutes.js');
 const authRoutes = require('./routes/authRoutes.js');
+const { isAuthenticated, isLoggedIn } = require('./middleware/auth.js');
 
 
 const app = express();
@@ -65,7 +66,7 @@ async function connectDB() {
 
 
 
-app.get("/menu", function (req, res) {
+app.get("/menu", isAuthenticated, function (req, res) {
   // res.render('menu');
   const data = {
     people: ["প্রথম", "দ্বিতীয়", "তৃতীয়", "চতুর্থ", "পঞ্চম"],
@@ -74,12 +75,16 @@ app.get("/menu", function (req, res) {
 });
 
 app.use(authRoutes);
-app.use(studentInformationRoutes);
-app.use(bookDistributionRoutes);
-app.use(bookReceivedRoutes);
+app.use(isAuthenticated,studentInformationRoutes);
+app.use(isAuthenticated,bookDistributionRoutes);
+app.use(isAuthenticated,bookReceivedRoutes);
 
 
-
+app.get('/logout', async function(req,res){
+    res.cookie('jwt','', {maxAge:1});
+    res.redirect('/');
+  })
+  
   
 app.listen(process.env.PORT || 4000,function(){
     console.log("server is running on port 4000");
