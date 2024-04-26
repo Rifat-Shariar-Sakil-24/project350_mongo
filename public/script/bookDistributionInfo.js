@@ -113,7 +113,7 @@ async function showDistributionInfo() {
          // console.log(student.subjects.bangla);
           row.innerHTML = `
               
-      <td>${student.fullName} </td>
+      <td> <a href = "/">  ${student.fullName} </a> </td>
       <td>${student.yearNumber}</td>
       <td>${student.classNumber}</td>
       <td>${student.rollNumber}</td>

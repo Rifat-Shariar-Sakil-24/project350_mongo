@@ -40,6 +40,7 @@ app.post('/login',async function(req,res){
             httpOnly: true,
             maxAge: maxAge * 1000
         })
+        
         res.status(201).send('ok');
     } catch (error) {
         
