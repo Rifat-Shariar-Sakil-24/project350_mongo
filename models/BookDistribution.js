@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const BookDistributionSchema = new mongoose.Schema({
-    studentID: {
+  schoolID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'School' ,
+    required : true,     
+  },
+  studentID: {
         type: String,
         unique: true
     },

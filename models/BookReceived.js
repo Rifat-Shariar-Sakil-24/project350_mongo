@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const BookReceivedSchema = new mongoose.Schema({
-    
+    schoolID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'School' ,
+        required : true,     
+      },
     classNumber: {
         type: Number,
         required:true

@@ -2,6 +2,17 @@ const express = require('express');
 const { School } = require('../models/School');
 const app = express.Router();
 
+
+const jwt = require('jsonwebtoken');
+const secret = process.env.SECRET;
+
+const maxAge = 3*24*60*60;
+const createToken = function(id){
+    return jwt.sign({id}, secret, {
+        expiresIn: maxAge
+    });
+}
+
 app.get("/",function(req,res){
     res.render('home');
 })
@@ -25,6 +36,11 @@ app.post('/login',async function(req,res){
         if(existingSchool.password!=data.password){
             return res.status(401).send('wrong password');
         }
+        const token = createToken(existingSchool._id);
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            maxAge: maxAge * 1000
+        })
         res.status(201).send('ok');
     } catch (error) {
         
@@ -42,6 +58,12 @@ app.post('/register', async function(req, res){
        
        const newSchool = new School(data);
        await newSchool.save();
+
+       const token = createToken(newSchool._id);
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            maxAge: maxAge * 1000
+        })
        res.status(201).send('New school registered'); 
     } catch (error) {
         console.log(error);

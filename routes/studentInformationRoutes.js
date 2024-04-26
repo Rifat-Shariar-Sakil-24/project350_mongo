@@ -1,6 +1,7 @@
 const express = require('express');
 const { Student } = require('../models/Student');
 const { BookDistribution } = require('../models/BookDistribution');
+const { getUserID } = require('../middleware/userID');
 const app = express.Router();
 
 app.get("/student-entry/class/:number", async function(req,res){
@@ -11,8 +12,11 @@ app.get("/student-entry/class/:number", async function(req,res){
     res.render('studentEntry', {ClassNumber:ClassNumber});
 })
 app.post("/student-entry/class/:number", async function(req,res){
-   
+    const schoolID = await getUserID(req);
+    //console.log(schoolId);
     const data = req.body; 
+    data.schoolID = schoolID;
+    
     
     let number = req.params.number;
     number++;
@@ -28,10 +32,13 @@ app.post("/student-entry/class/:number", async function(req,res){
   })
   app.put("/student-entry/class/:number", async function(req, res) {
     const data = req.body;
+     const schoolID = await getUserID(req);
+   
     const conditions = {
         classNumber: data.classNumber,
         rollNumber: data.rollNumber,
         yearNumber: data.yearNumber,
+        schoolID : schoolID
     };
 
 
@@ -46,6 +53,8 @@ app.post("/student-entry/class/:number", async function(req,res){
 
 app.delete("/student-entry/class/:number", async function(req, res) {
     const conditions = req.body;
+    const schoolID = await getUserID(req);
+    conditions.schoolID =  schoolID;
     console.log(conditions);
 
     try {
@@ -68,11 +77,16 @@ app.delete("/student-entry/class/:number", async function(req, res) {
 
 
 app.get('/getStudentData', async function(req,res){
+    const schoolID = await getUserID(req);
+    // console.log(schoolId);
+    // const data = req.body; 
+    // data.schoolID = schoolId;
     const { classNo, roll, year } = req.query; // Use req.query to get query parameters
-    console.log("called");
+   // console.log("called");
  
     try{
         const found = await Student.findOne({ 
+            schoolID : schoolID,
             classNumber: classNo,
             rollNumber: roll,
             yearNumber: year,
@@ -97,6 +111,8 @@ app.get("/studentInformation", function(req,res){
 app.get('/getAllStudentData', async function(req,res){
   
    const data = req.query; 
+   const schoolID = await getUserID(req);
+   data.schoolID =  schoolID;
 
   try{
          const studentInformation = await Student.find(data).exec();

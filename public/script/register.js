@@ -29,6 +29,7 @@ form.addEventListener('submit', async function(e) {
                 
                  
             } else {
+                console.log('dd');
                 const errorMessage = await res.text(); 
                 alert(errorMessage);
             }
