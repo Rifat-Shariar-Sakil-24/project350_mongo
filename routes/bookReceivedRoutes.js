@@ -1,5 +1,6 @@
 const express = require('express');
 const { BookReceived } = require('../models/BookReceived');
+const { getUserID } = require('../middleware/userID');
 const app = express.Router();
 
 app.get('/book-Received-entry/class/:number', function(req,res){
@@ -10,8 +11,11 @@ app.get('/book-Received-entry/class/:number', function(req,res){
 })
 
 app.post('/book-Received-entry/class/:number', async function(req,res){
+    const data = req.body;
+    const schoolID = await getUserID(req);
+    data.schoolID = schoolID;
     try {
-           const data = req.body;
+           
    const newBookReceived = new BookReceived(data);
    await newBookReceived.save();
    res.status(201).send('new book received data has been added');
@@ -32,6 +36,8 @@ app.get("/bookReceivedInformation", function(req,res){
   app.get('/getAllBookReceivedData', async function(req,res){
   
     const data = req.query; 
+    const schoolID = await getUserID(req);
+    data.schoolID = schoolID;
  
    try{
     const distributionInformation = await BookReceived.find(data).exec();
