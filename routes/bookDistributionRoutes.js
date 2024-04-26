@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express =require ('express');
 const { Student } = require('../models/Student');
 const { BookDistribution } = require('../models/BookDistribution');
+const { getUserID } = require('../middleware/userID');
 
 const app = express.Router();
 
@@ -14,11 +15,12 @@ app.get('/book-distribution-entry/class/:number', function(req,res){
 
 
 app.post("/book-distribution-entry/class/:number", async function (req, res) {
-
+     const schoolID = await getUserID(req);
     const studentInfo = await Student.findOne({ 
         classNumber: req.body.classNumber,
         rollNumber: req.body.rollNumber,
         yearNumber: req.body.yearNumber,
+        schoolID : schoolID
     }).exec();
 
     //console.log(studentInfo._id);
@@ -27,6 +29,7 @@ app.post("/book-distribution-entry/class/:number", async function (req, res) {
 
 
   const transformedData = {
+    schoolID : schoolID,
     studentID : studentID,
     classNumber: parseInt(req.body.classNumber),
     rollNumber: parseInt(req.body.rollNumber),
@@ -56,8 +59,9 @@ app.post("/book-distribution-entry/class/:number", async function (req, res) {
 
 app.put("/book-distribution-entry/class/:number", async function (req, res) {
    // console.log(req.body);
-
+   const schoolID = await getUserID(req);
     const studentInfo = await Student.findOne({ 
+        schoolID : schoolID,
         classNumber: req.body.classNumber,
         rollNumber: req.body.rollNumber,
         yearNumber: req.body.yearNumber,
@@ -69,6 +73,7 @@ app.put("/book-distribution-entry/class/:number", async function (req, res) {
 
 
   const transformedData = {
+    schoolID : schoolID,
     studentID : studentID,
     classNumber: parseInt(req.body.classNumber),
     rollNumber: parseInt(req.body.rollNumber),
@@ -95,7 +100,10 @@ try {
 });
 
 app.delete("/book-distribution-entry/class/:number", async function (req, res) {
-  const conditions = req.body;
+  let conditions = req.body;
+  const schoolID = await getUserID(req);
+  conditions.schoolID = schoolID;
+  
 
   try {
     await BookDistribution.findOneAndDelete(conditions);
@@ -116,6 +124,8 @@ app.get("/bookDistributionInformation", function(req,res){
   app.get('/getAllDistributionData', async function(req,res){
   
     const data = req.query; 
+    const schoolID = await getUserID(req);
+    data.schoolID = schoolID;
  
    try{
     const distributionInformation = await BookDistribution.find(data).exec();
@@ -126,7 +136,7 @@ app.get("/bookDistributionInformation", function(req,res){
         const obj = doc.toObject();
         
         
-        const { studentID, __v, ...rest } = obj;
+        const { schoolID, studentID, __v, ...rest } = obj;
        // console.log(studentID);
         const studentInfo = await Student.find({_id: studentID}).exec();
         //console.log(studentInfo);
