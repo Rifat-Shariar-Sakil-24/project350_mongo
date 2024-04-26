@@ -6,7 +6,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    {{!--
+    <link rel="stylesheet" href="./assets/css/style.css" /> --}}
+    <style>
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Menu button styles */
+        .menu-btn {
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Logo styles */
+        .logo {
+            width: 100px;
+            /* Adjust according to your logo size */
+        }
+
+        /* Main navigation styles */
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .main-menu {
+            list-style-type: none;
+            display: flex;
+        }
+
+        .main-menu li {
+            margin-left: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Showcase/header styles */
+        .showcase {
+            height: 300px;
+            /* Adjust as needed */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .showcase .btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .showcase .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Row styles */
+        .row {
+            margin-bottom: 20px;
+        }
+
+        .row-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,38 +111,33 @@
     </div>
 
     <div class="container">
-        <!-- Nav -->
-        <nav class="main-nav">
-            <img src="./assets/images/annada.jpeg" alt="logo" class="logo" />
-
-            <ul class="main-menu">
-
-                <li>
-                    <a href="login" class="nav-link" style="font-weight: 600"> লগইন
-                    </a>
-                      <a href="register" class="nav-link" style="font-weight: 600"> রেজিস্টার 
-
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <header class="showcase" style="background-image: url(./assets/images/bg-8.jpg);">
-            <a href="http://www.nctb.gov.bd/site/page/85da3a9e-fd7f-4b2f-be74-f8e6637ae785/-" target="_blank"
-                class="btn">
-                জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক বোর্ড (এনসিটিবি)<i class="fas fa-chevron-right"></i>
-            </a>
-        </header>
-
-        <div class="contain">
-            <div class="row">
-                <div class="row-title">
-                    <h1 class="row-title"> স্কুল রেকর্ড
-                    </h1>
-                </div>
+    <!-- Nav -->
+    <nav class="main-nav">
+        <img src="./assets/images/annada.jpeg" alt="logo" class="logo" />
+        <ul class="main-menu">
+            <li>
+                <a href="login" class="nav-link" style="font-weight: 600">লগইন</a>
+            </li>
+            <li>
+                <a href="register" class="nav-link" style="font-weight: 600">রেজিস্টার</a>
+            </li>
+        </ul>
+    </nav>
+    <header class="showcase" style="background-image: url(./assets/images/bg-8.jpg);">
+        <a href="http://www.nctb.gov.bd/site/page/85da3a9e-fd7f-4b2f-be74-f8e6637ae785/-" target="_blank"
+            class="btn">
+            জাতীয় শিক্ষাক্রম ও পাঠ্যপুস্তক বোর্ড (এনসিটিবি)<i class="fas fa-chevron-right"></i>
+        </a>
+    </header>
+    <div class="contain">
+        <div class="row">
+            <div class="row-title" style="text-align: center;">
+                <h1>আমাদের স্কুল</h1>
             </div>
-
         </div>
     </div>
+</div>
+
 </body>
 
 </html>
