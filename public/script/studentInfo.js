@@ -85,8 +85,9 @@ async function showStudentInfo() {
                       <td>${student.phoneNumber}</td>
                       <td>${student.address}</td>
                       <td> 
-                          <button value="${student._id}" onclick="showEditBox(this.value)">Edit</button> 
-                          <button onclick="showDeleteBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})">Delete</button> 
+                      <button value="${student._id}" onclick="showEditBox(this.value)" class="btn btn-secondary">Edit</button>
+
+                          <button onclick="showDeleteBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})" class="btn btn-danger">Delete</button> 
                       </td>
                   `;
                   tableBody.appendChild(row);

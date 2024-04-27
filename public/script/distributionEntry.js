@@ -1,4 +1,3 @@
-
 const classNumberId = document.getElementById('classNumber');
 const rollNumberId = document.getElementById('rollNumber');
 const yearNumberId = document.getElementById('yearNumber');

@@ -1,6 +1,10 @@
+
+
+
 let selectedClass = 1;
 const modalEdit = document.getElementById("editStudentModal");
 const modalDelete  = document.getElementById("confirmationModalDelete");
+const modalShowStudentInfo = document.getElementById("showStudentModal");
 async function  renderSubjects() {
     const head = document.getElementById("studentTableHead");
     head.classList.add("gg");
@@ -130,14 +134,14 @@ async function showDistributionInfo() {
 
           // Append checkboxes to the row
           row.innerHTML = `
-            <td><a href="/">${student.fullName}</a></td>
+            <td><button onclick ="showStudentInfoBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})">${student.fullName}</button></td>
             <td>${student.yearNumber}</td>
             <td>${student.classNumber}</td>
             <td>${student.rollNumber}</td>
             ${checkboxesHTML}
             <td>
-              <button value="${student._id}" onclick="showEditBox(this.value)">Edit</button> 
-              <button onclick="showDeleteBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})">Delete</button>
+              <button value="${student._id}" onclick="showEditBox(this.value)" class = "btn btn-secondary">Edit</button> 
+              <button onclick="showDeleteBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})" class = "btn btn-danger">Delete</button>
             </td>`;
 
           tableBody.appendChild(row);
@@ -360,4 +364,60 @@ function showDeleteBox(yearNumber, classNumber, rollNumber) {
   cancelDeleteButton.onclick = function () {
     modalDelete.style.display = "none";
   };
+}
+
+async function showStudentInfoBox(yearNumber, classNumber, rollNumber){
+  const studentDetails = {
+    yearNumber: yearNumber,
+    classNumber: classNumber,
+    rollNumber: rollNumber,
+  };
+
+  console.log('gg');
+  modalShowStudentInfo.style.display = "block";
+
+  window.onclick = function (event) {
+    if (event.target == modalShowStudentInfo) {
+      modalShowStudentInfo.style.display = "none";
+    }
+  };
+
+  
+
+    try {
+      const res = await fetch(`/getStudentData?classNo=${classNumber}&roll=${rollNumber}&year=${yearNumber}`);
+      //console.log(res);
+      const data = await res.json();
+      console.log(data);
+
+      
+  document.querySelector('[name="classNumberShow"]').value =
+  data.classNumber;
+document.querySelector('[name="firstNameShow"]').value =
+  data.firstName;
+document.querySelector('[name="secondNameShow"]').value =
+  data.secondName;
+document.querySelector('[name="rollNumberShow"]').value =
+  data.rollNumber;
+document.querySelector('[name="yearNumberShow"]').value =
+  data.yearNumber;
+document.querySelector('[name="fatherNameShow"]').value =
+  data.fatherName;
+document.querySelector('[name="motherNameShow"]').value =
+  data.motherName;
+document.querySelector('[name="phoneNumberShow"]').value =
+  data.phoneNumber;
+document.querySelector('[name="addressShow"]').value =
+  data.address;
+document.querySelector('[name="descriptionShow"]').value =
+ data.description;
+    } catch (error) {
+      console.log("Error occurred:", error);
+    }
+  
+
+  // const cancelDeleteButton = document.getElementById("cancelDeleteButton");
+  // cancelDeleteButton.onclick = function () {
+  //   modalDelete.style.display = "none";
+  // };
 }

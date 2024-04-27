@@ -91,8 +91,9 @@ app.get('/getStudentData', async function(req,res){
             rollNumber: roll,
             yearNumber: year,
         }).exec();
+        console.log(found);
         if(found==null) res.status(401).send("student already exists");
-        else res.status(201).send("No such student found");
+        else res.status(201).json(found);
     }
     catch(error){
         console.log(error);

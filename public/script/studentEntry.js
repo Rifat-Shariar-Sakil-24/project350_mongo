@@ -17,7 +17,6 @@ async function updateStudentInfo() {
   try{
      console.log(classNo,roll,year);
      const res  = await fetch(`/getStudentData?classNo=${classNo}&roll=${roll}&year=${year}`);
-     const message = await res.text();
      const status =  res.status;
      console.log(status);
      if(status===201){
