@@ -54,47 +54,51 @@ async function showStudentInfo() {
   const yearNumber = yearInput.value;
 
   if (yearNumber != null) {
-    try {
-      const classNumber = classSelected;
-      editStudentObjects = [];
-      const res = await fetch(
-        `/getAllStudentData?classNumber=${classNumber}&yearNumber=${yearNumber}`
-      );
+      try {
+          const classNumber = classSelected;
+          editStudentObjects = [];
+          const res = await fetch(
+              `/getAllStudentData?classNumber=${classNumber}&yearNumber=${yearNumber}`
+          );
 
-      const status = res.status;
+          const status = res.status;
 
-      if (status === 201) {
-        const data = await res.json();
-        const tableBody = document.getElementById("studentTableBody");
-        tableBody.innerHTML = "";
+          if (status === 201) {
+              const data = await res.json();
+              const tableBody = document.getElementById("studentTableBody");
+              tableBody.innerHTML = "";
 
-        data.forEach((student) => {
-          editStudentObjects.push(student);
-          const row = document.createElement("tr");
-          console.log(student.firstName);
-          row.innerHTML = `
-            
-    <td>${student.firstName} ${student.secondName}</td>
-    <td>${student.fatherName}</td>
-    <td>${student.motherName}</td>
-    <td>${student.yearNumber}</td>
-    <td>${student.classNumber}</td>
-    <td>${student.rollNumber}</td>
-    <td>${student.phoneNumber}</td>
-    <td>${student.address}</td>
-    <td> <button value ="${student._id}" onclick="showEditBox(this.value)">Edit</button> 
-    <button  onclick="showDeleteBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})">Delete</button> </td>
+              // Sort the data based on roll number in increasing order
+              data.sort((a, b) => a.rollNumber - b.rollNumber);
 
-    `;
-          tableBody.appendChild(row);
-        });
-      } else {
-        alert("error occured");
+              data.forEach((student) => {
+                  editStudentObjects.push(student);
+                  const row = document.createElement("tr");
+                  console.log(student.firstName);
+                  row.innerHTML = `
+                      <td>${student.firstName} ${student.secondName}</td>
+                      <td>${student.fatherName}</td>
+                      <td>${student.motherName}</td>
+                      <td>${student.yearNumber}</td>
+                      <td>${student.classNumber}</td>
+                      <td>${student.rollNumber}</td>
+                      <td>${student.phoneNumber}</td>
+                      <td>${student.address}</td>
+                      <td> 
+                          <button value="${student._id}" onclick="showEditBox(this.value)">Edit</button> 
+                          <button onclick="showDeleteBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})">Delete</button> 
+                      </td>
+                  `;
+                  tableBody.appendChild(row);
+              });
+          } else {
+              alert("Error occurred");
+          }
+      } catch (error) {
+          console.error(error);
       }
-    } catch (error) {}
   }
 }
-
 
 
 

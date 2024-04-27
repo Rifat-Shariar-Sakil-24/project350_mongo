@@ -107,41 +107,30 @@ async function showDistributionInfo() {
         const data = await res.json();
         BookDistributions = data;
 
+        // Sort data based on rollNumber
+        data.sort((a, b) => a.rollNumber - b.rollNumber);
+
         data.forEach((student) => {
           editStudentObjects.push(student);
           let row = document.createElement("tr");
-          row.classList.add("gg");
-          
-         
-          
+
           // Create checkboxes for subjects
           const subjects = student.subjects;
           let checkboxesHTML = "";
-          console.log(subjects);
           let created = 0;
           Object.keys(subjects).forEach(subject => {
             created++;
-            if(selectedClass > 3 || (selectedClass <= 3 && created < 4)){
+            if (selectedClass > 3 || (selectedClass <= 3 && created < 4)) {
               checkboxesHTML += `
               <td>
-    <input type="checkbox" id="${subject}-${student._id}" value="${subject}" ${subjects[subject] ? 'checked' : ''}  disabled class="checkbox">
-</td>`;
-
+                <input type="checkbox" id="${subject}-${student._id}" value="${subject}" ${subjects[subject] ? 'checked' : ''}  disabled class="checkbox">
+              </td>`;
             }
           });
-          
-          
-          
-          
 
           // Append checkboxes to the row
           row.innerHTML = `
-          <td>
-          <b style="font-weight: 600;">
-              <a href="/">${student.fullName}</a>
-          </b>
-      </td>
-      
+            <td><a href="/">${student.fullName}</a></td>
             <td>${student.yearNumber}</td>
             <td>${student.classNumber}</td>
             <td>${student.rollNumber}</td>
@@ -161,6 +150,7 @@ async function showDistributionInfo() {
     }
   }
 }
+
 
 
 

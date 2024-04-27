@@ -111,7 +111,9 @@ th, td {
   border: 1px solid #ddd; /* Border color */
 }
 
-
+td {
+  font-size: 1.1rem;
+}
 th {
   background-color: #f2f2f2; /* Background color for table headers */
 }
