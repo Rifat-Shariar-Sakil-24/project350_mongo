@@ -3,6 +3,8 @@ const modalEdit = document.getElementById("editStudentModal");
 const modalDelete  = document.getElementById("confirmationModalDelete");
 async function  renderSubjects() {
     const head = document.getElementById("studentTableHead");
+    head.classList.add("gg");
+
     head.innerHTML = "";
   
     let headingrow = document.createElement("tr");
@@ -99,48 +101,67 @@ async function showDistributionInfo() {
       const status = res.status;
 
       if (status === 201) {
-        
         const tableBody = document.getElementById("studentTableBody");
         tableBody.innerHTML = "";
 
         const data = await res.json();
         BookDistributions = data;
- 
 
         data.forEach((student) => {
           editStudentObjects.push(student);
           let row = document.createElement("tr");
-         // console.log(student.subjects.bangla);
+          row.classList.add("gg");
+          
+         
+          
+          // Create checkboxes for subjects
+          const subjects = student.subjects;
+          let checkboxesHTML = "";
+          console.log(subjects);
+          let created = 0;
+          Object.keys(subjects).forEach(subject => {
+            created++;
+            if(selectedClass > 3 || (selectedClass <= 3 && created < 4)){
+              checkboxesHTML += `
+              <td>
+    <input type="checkbox" id="${subject}-${student._id}" value="${subject}" ${subjects[subject] ? 'checked' : ''}  disabled class="checkbox">
+</td>`;
+
+            }
+          });
+          
+          
+          
+          
+
+          // Append checkboxes to the row
           row.innerHTML = `
-              
-      <td> <a href = "/">  ${student.fullName} </a> </td>
-      <td>${student.yearNumber}</td>
-      <td>${student.classNumber}</td>
-      <td>${student.rollNumber}</td>
-      <td>${student.subjects.bangla}</td>
-      <td>${student.subjects.english}</td>
-      <td>${student.subjects.math}</td>
-      `
-      if(selectedClass>3){
-        row.innerHTML += `
-        <td>${student.subjects.science}</td>
-        <td>${student.subjects.socialscience}</td>
-        <td>${student.subjects.religion}</td>
-        `
-      }
-      row.innerHTML +=
-      `<td><button value ="${student._id}" onclick="showEditBox(this.value)">Edit</button> 
-      <button  onclick="showDeleteBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})">Delete</button> </td>
-  
-      `;
+          <td>
+          <b style="font-weight: 600;">
+              <a href="/">${student.fullName}</a>
+          </b>
+      </td>
+      
+            <td>${student.yearNumber}</td>
+            <td>${student.classNumber}</td>
+            <td>${student.rollNumber}</td>
+            ${checkboxesHTML}
+            <td>
+              <button value="${student._id}" onclick="showEditBox(this.value)">Edit</button> 
+              <button onclick="showDeleteBox(${student.yearNumber}, ${student.classNumber}, ${student.rollNumber})">Delete</button>
+            </td>`;
+
           tableBody.appendChild(row);
         });
       } else {
-        alert("error occured");
+        alert("Error occurred");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
+
 
 
 async function showEditBox(BookDistributionID){

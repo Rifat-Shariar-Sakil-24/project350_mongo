@@ -30,6 +30,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  
 }
 .table tr{
   background-color:  #F5F5F4;
@@ -100,12 +101,16 @@
 table {
   border-collapse: collapse;
   width: 100%;
+  
+ 
 }
 
 th, td {
   padding: 8px;
+  
   border: 1px solid #ddd; /* Border color */
 }
+
 
 th {
   background-color: #f2f2f2; /* Background color for table headers */
@@ -114,6 +119,7 @@ th {
 /* Style links */
 td a {
   color: blue; /* Link color */
+  font-size: 1.1rem;
   text-decoration: none; /* Remove default underline */
 }
 
