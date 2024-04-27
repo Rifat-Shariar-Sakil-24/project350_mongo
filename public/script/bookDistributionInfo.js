@@ -281,8 +281,12 @@ form.addEventListener("submit", async function (e) {
     });
 
     if (res.status == 201) {
-      await showDistributionInfo();
       modalEdit.style.display = 'none';
+
+      setTimeout(async () => {
+        await showDistributionInfo();
+      }, 500);
+      
     } else {
       const errorMessage = await res.text();
       alert(errorMessage);

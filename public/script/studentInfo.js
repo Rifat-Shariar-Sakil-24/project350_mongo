@@ -164,10 +164,12 @@ form.addEventListener("submit", async function (e) {
     });
 
     if (res.status == 201) {
-      alert(await res.text());
+      //alert(await res.text());
       var modal = document.getElementById("editStudentModal");
       modal.style.display = "none";
-      await showStudentInfo();
+     setTimeout(async () => {
+       await showStudentInfo();
+     }, 500);
 
     } else {
       const errorMessage = await res.text();

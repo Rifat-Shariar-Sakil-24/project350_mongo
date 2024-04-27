@@ -94,3 +94,48 @@
 .blueBorder{
   border: 2px solid rgb(103, 103, 216);
 }
+
+
+/* Reset default browser styles */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd; /* Border color */
+}
+
+th {
+  background-color: #f2f2f2; /* Background color for table headers */
+}
+
+/* Style links */
+td a {
+  color: blue; /* Link color */
+  text-decoration: none; /* Remove default underline */
+}
+
+td a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+/* Style buttons */
+button {
+  padding: 6px 12px;
+  border: none;
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Button text color */
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker background color on hover */
+}
+
+/* Optional: Add margin to buttons */
+button + button {
+  margin-left: 5px;
+}
