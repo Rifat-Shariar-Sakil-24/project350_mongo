@@ -211,3 +211,6 @@ body {
   font-size: 14px;
   color: #007bff;
 }
+.menu-btn {
+  visibility: hidden;
+}
