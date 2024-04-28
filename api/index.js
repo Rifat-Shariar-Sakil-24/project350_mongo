@@ -11,11 +11,19 @@ const path = require('path');
 // const taskRoutes = require('./routes/taskRoutes');
 // const { isAuthenticated } = require('./middleware/authMiddleware');
 
+// const studentInformationRoutes = require('../routes/studentInformationRoutes.js');
+// const bookDistributionRoutes = require('../routes/bookDistributionRoutes.js');
+// const bookReceivedRoutes = require('../routes/bookReceivedRoutes.js');
+// const authRoutes = require('../routes/authRoutes.js');
+// const { isAuthenticated, isLoggedIn } = require('../middleware/auth.js');
+
+
 const studentInformationRoutes = require('../routes/studentInformationRoutes.js');
 const bookDistributionRoutes = require('../routes/bookDistributionRoutes.js');
 const bookReceivedRoutes = require('../routes/bookReceivedRoutes.js');
 const authRoutes = require('../routes/authRoutes.js');
 const { isAuthenticated, isLoggedIn } = require('../middleware/auth.js');
+
 
 
 const app = express();
@@ -27,7 +35,9 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'views'));
+const parentDir = path.dirname(__dirname);
+app.set('views', path.join(parentDir, 'views'));
+
 
 //app.use(express.static(path.join(__dirname, 'public')));
 
