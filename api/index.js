@@ -11,11 +11,11 @@ const path = require('path');
 // const taskRoutes = require('./routes/taskRoutes');
 // const { isAuthenticated } = require('./middleware/authMiddleware');
 
-const studentInformationRoutes = require('./routes/studentInformationRoutes.js');
-const bookDistributionRoutes = require('./routes/bookDistributionRoutes.js');
-const bookReceivedRoutes = require('./routes/bookReceivedRoutes.js');
-const authRoutes = require('./routes/authRoutes.js');
-const { isAuthenticated, isLoggedIn } = require('./middleware/auth.js');
+const studentInformationRoutes = require('../routes/studentInformationRoutes.js');
+const bookDistributionRoutes = require('../routes/bookDistributionRoutes.js');
+const bookReceivedRoutes = require('../routes/bookReceivedRoutes.js');
+const authRoutes = require('../routes/authRoutes.js');
+const { isAuthenticated, isLoggedIn } = require('../middleware/auth.js');
 
 
 const app = express();
